@@ -1,4 +1,4 @@
-package com.klawund.eurekaserver;
+package com.klawund.eureka;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
