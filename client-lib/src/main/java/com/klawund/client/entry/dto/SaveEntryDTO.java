@@ -1,4 +1,4 @@
-package com.klawund.fin.client.entry.dto;
+package com.klawund.client.entry.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -13,11 +13,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EntryDTO implements Serializable
+public class SaveEntryDTO implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
 	private String title;
 	private BigDecimal ammount;
 	private LocalDate dueDate;

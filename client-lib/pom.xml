@@ -46,6 +46,13 @@
         </dependencies>
     </dependencyManagement>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/klawund/fin</url>
+        </repository>
+    </distributionManagement>
+
     <build>
         <plugins>
             <plugin>
