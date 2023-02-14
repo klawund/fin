@@ -1,9 +1,15 @@
 package com.klawund.entry.service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.klawund.client.entry.dto.EntryDTO;
 import com.klawund.client.entry.dto.SaveEntryDTO;
@@ -45,5 +51,55 @@ public class EntryService
 				.dueDate(newEntry.getDueDate())
 				.labels(entry.getLabels())
 				.build();
+	}
+	
+	@Transactional
+	public EntryDTO update(Long id, SaveEntryDTO saveEntryDTO)
+	{
+		Optional<Entry> existingEntryOptional = repository.findById(id);
+		if (existingEntryOptional.isPresent())
+		{
+			// TODO throw exception
+			return null;
+		}
+		
+		Entry existingEntry = existingEntryOptional.get();
+		
+		String newTitle = saveEntryDTO.getTitle();
+		if (existingEntry.getTitle() != newTitle)
+		{
+			existingEntry.setTitle(newTitle);
+		}
+		
+		BigDecimal newAmmount = saveEntryDTO.getAmmount();
+		if (!Objects.equals(existingEntry.getAmmount(), newAmmount))
+		{
+			existingEntry.setAmmount(newAmmount);
+		}
+		
+		LocalDate newDueDate = saveEntryDTO.getDueDate();
+		if (!Objects.equals(existingEntry.getDueDate(), newDueDate))
+		{
+			existingEntry.setDueDate(newDueDate);
+		}
+		
+		Set<String> newLabels = existingEntry.getLabels();
+		if (!Objects.equals(existingEntry.getLabels(), newLabels))
+		{
+			existingEntry.setLabels(newLabels);
+		}
+		
+		return EntryDTO.builder()
+				.id(existingEntry.getId())
+				.title(existingEntry.getTitle())
+				.ammount(existingEntry.getAmmount())
+				.dueDate(existingEntry.getDueDate())
+				.labels(existingEntry.getLabels())
+				.build();
+	}
+	
+	public void remove(Long id)
+	{
+		repository.deleteById(id);
 	}
 }
