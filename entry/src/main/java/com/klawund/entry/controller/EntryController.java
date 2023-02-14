@@ -1,30 +1,37 @@
 package com.klawund.entry.controller;
 
-import com.klawund.entry.model.Entry;
-import com.klawund.entry.repository.EntryRepository;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.klawund.client.entry.dto.EntryDTO;
+import com.klawund.client.entry.dto.SaveEntryDTO;
+import com.klawund.entry.service.EntryService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/entries")
-// TODO standardize all returns as DTOs located in a client-lib
 // TODO swagger docs
 public class EntryController
 {
-	private final EntryRepository repository;
+	private final EntryService service;
 
 	@GetMapping("/")
-	public ResponseEntity<List<Entry>> findAll()
+	public ResponseEntity<List<EntryDTO>> findAll()
 	{
-		return ResponseEntity.ok(repository.findAll());
+		return ResponseEntity.ok(service.findAll());
 	}
 
 	@PostMapping("/")
-	public ResponseEntity<Entry> save(@RequestBody Entry entry)
+	public ResponseEntity<EntryDTO> save(@RequestBody SaveEntryDTO entry)
 	{
-		return ResponseEntity.ok(repository.save(entry));
+		return ResponseEntity.ok(service.save(entry));
 	}
 }
